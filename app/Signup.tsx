@@ -17,7 +17,6 @@ import { RootState } from "../store/store";
 import { register } from "../features/auth/authThunks";
 import { User } from "../types/user";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import * as DocumentPicker from "expo-document-picker";
