@@ -21,6 +21,7 @@ import { Link, Stack, useNavigation } from "expo-router";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
+import { API_URL } from "@/constants/API_URL";
 
 const AddPost = () => {
   const animation = useRef(new Animated.Value(0)).current;
@@ -78,7 +79,7 @@ const AddPost = () => {
       const file = response.assets?.[0];
 
       if (file) {
-        console.log("filee", file);
+        console.log("file", file);
         // @ts-ignore
         formData.append("image", {
           uri: file.uri,
@@ -88,7 +89,7 @@ const AddPost = () => {
         console.log("formData", formData);
 
         const res = await axios.post(
-          "http://192.168.38.132:3005/upload",
+          `${API_URL}/upload`,
           formData,
           {
             headers: {
