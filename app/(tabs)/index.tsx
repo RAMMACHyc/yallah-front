@@ -11,15 +11,40 @@ import ListPlaces from "../../components/ListPlaces";
 import color from "../../styles/color";
 import DropdownComponent from "../../components/Dropdown";
 import { useOnBoarding } from "../../utils/useOnboarding";
-import { useAppSelector } from "@/store";
-import fakeData from "@/data/fakeData";
+import { useAppDispatch, useAppSelector } from "@/store";
+
+import { getCategories } from "@/features/category/categoryThunks";
+import { getPosts } from "@/features/post/postThunks";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const options = ["Light", "Standard", "Pro"];
 
 export default function HomeScreen(props: any) {
   const categories = useAppSelector((state) => state.category.categories); 
-  console.log(categories);
+  const posts = useAppSelector((state) => state.post.posts);
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const userData = await AsyncStorage.getItem('user');
+  //       const userId = userData != null ? JSON.parse(userData).id : null;
+  //       console.log('User ID fetched from AsyncStorage:', userId);
+
+  
+  //     } catch (error) {
+  //       console.error('Error fetching data from AsyncStorage:', error);
+  //     }
+  //   };
+
+  //   fetchUserData();
+  // }, []);
+ 
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getCategories());
+    dispatch(getPosts());
+  }, [dispatch]);
+
 
   useOnBoarding();
   return (
@@ -52,8 +77,8 @@ export default function HomeScreen(props: any) {
   
           </View>
           <FlatList 
-            data={fakeData}
-            keyExtractor={(item) => item.id.toString()}
+            data={posts}
+            keyExtractor={(item, index) => item.id?.toString() ?? index.toString()}
             renderItem={({ item }) => <ListPlaces item={item} />}
             horizontal
             showsHorizontalScrollIndicator={false}
