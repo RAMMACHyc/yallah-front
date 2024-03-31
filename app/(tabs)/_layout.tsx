@@ -12,6 +12,7 @@ const tabBarStyle: ViewStyle = {
   bottom: 20,
   left: 20,
   right: 20,
+  
 };
 export default function TabsLayout() {
   const user = useAppSelector((state) => state.auth.user);
@@ -20,7 +21,7 @@ export default function TabsLayout() {
     return <Redirect href="/login" /> ;
   }
   return (
-      <Tabs>
+      <Tabs >
         <Tabs.Screen
           name="index"
           options={{
@@ -56,6 +57,7 @@ export default function TabsLayout() {
           options={{
             tabBarStyle: tabBarStyle,
             tabBarShowLabel: false,
+            headerShown: false,
             title: "location",
             tabBarIcon: ({ focused }) => (
               <Ionicons
