@@ -42,6 +42,7 @@ export default function TabsLayout() {
           options={{
             tabBarStyle: tabBarStyle,
             tabBarShowLabel: false,
+            headerShown: false,
             title: "settings",
             tabBarIcon: ({ focused }) => (
               <Ionicons
