@@ -19,7 +19,7 @@ const Places = ({ item }: Props) => {
       <View style={styles.infoContainer}>
         <View style={styles.locationContainer}>
           <View style={styles.locationTextContainer}>
-            <Text style={styles.locationText}>Casablanca</Text>
+            <Text style={styles.locationText}>{item.city}</Text>
           </View>
           <View style={styles.eyeIconContainer}>
             <AntDesign name="eye" size={15} color="gray" />
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
   locationText: {
     color: "black",
     fontWeight: "700",
+    fontSize: 12,
   },
   eyeIconContainer: {
     width: 50,
