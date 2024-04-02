@@ -22,20 +22,29 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import { API_URL } from "@/constants/API_URL";
+import { CityType } from "@/types/city";
+import DropdownComponent from "@/components/Dropdown";
+import useUserData from "@/hook/useUserData";
+
 
 const AddPost = () => {
   const animation = useRef(new Animated.Value(0)).current;
   const [open, setOpen] = useState(false);
+  const [selectedCity, setSelectedCity] = useState<CityType | null>(null);
+  const userData = useUserData();
   const [postData, setData] = useState({
     title: "",
     file: null,
+    city: selectedCity,
+    user : userData?.user.id
   });
+ 
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
 
   
-
-  
+ console.log("User Data", userData?.user.id);
+  console.log("Post Data", selectedCity);
 
   const rotation = {
     transform: [
@@ -111,13 +120,23 @@ const AddPost = () => {
     dispatch(createPost(formData));
     navigation.goBack();
   };
-
+ 
   const handleSubmit = () => {
-    onSubmit(postData as any);
+    if (selectedCity) {
+      onSubmit({
+        ...postData,
+        city: selectedCity.name,
+      });
+    } else {
+      console.log("Please select a city");
+    }
   };
 
   const handleGoBack = () => {
     navigation.goBack();
+  };
+  const handleCitySelection = (city: CityType | null) => {
+    setSelectedCity(city);
   };
 
   return (
@@ -141,7 +160,7 @@ const AddPost = () => {
           onChangeText={(title) => setData((prev) => ({ ...prev, title }))}
         />
       </InputWrapper>
-
+ 
       <TouchableOpacity onPress={handleSubmit}>
         <Animated.View style={styles.done}>
           <FontAwesome name="send" size={25} color="white" />
@@ -157,6 +176,10 @@ const AddPost = () => {
           />
         </Animated.View>
       </TouchableOpacity>
+      <View style={styles.city}>
+      <DropdownComponent onCitySelect={handleCitySelection} />
+      </View>
+   
 
       <View style={styles.bottonContainer}>
         <TouchableOpacity>
@@ -258,6 +281,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#00000010",
+    shadowColor: "#F02A4B",
+    shadowOffset: {
+      height: 10,
+      width: 0,
+    },
+  },
+
+  city: {
+    position: "absolute",
+    bottom: 700,
+    right: 120,
     shadowColor: "#F02A4B",
     shadowOffset: {
       height: 10,

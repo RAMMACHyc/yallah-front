@@ -19,12 +19,14 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { CategoryType } from "@/types/category";
 import { CityType } from "@/types/city";
 import { createPlace } from "@/features/place/placeThunks";
+import { TextInput } from "react-native";
 
 const addPlace: React.FC = () => {
   const [coordinates, setCoordinates] = useState<LatLng | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | null>(
     null
   );
+  const [placeName, setPlaceName] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<CityType | null>(null);
   const [open, setOpen] = useState(false);
   const navigation = useNavigation();
@@ -45,16 +47,16 @@ const addPlace: React.FC = () => {
     setSelectedCategory(selectedCategory);
   };
   const onSubmit = () => {
-   if (selectedCategory && coordinates && selectedCity) {
+    if (selectedCategory && coordinates && selectedCity && placeName) {
       const data = {
         categoryId: selectedCategory._id,
         location: coordinates,
         city: selectedCity.name,
+        placeName: placeName,
       };
       dispatch(createPlace(data));
     }
- 
-};
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -75,7 +77,20 @@ const addPlace: React.FC = () => {
           style={{ position: "absolute", bottom: 80, left: 120 }}
           entering={FadeInUp.delay(200).duration(1000).springify()}
         >
-
+          <TextInput
+            style={{
+              width: 150,
+              height: 40,
+              borderWidth: 1,
+              borderColor: "gray",
+              borderRadius: 20,
+              padding: 10,
+              marginBottom: 10,
+            }}
+            placeholder="Place Name"
+            value={placeName}
+            onChangeText={(text) => setPlaceName(text)}
+          />
           <TouchableOpacity
             style={{
               width: 150,
