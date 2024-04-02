@@ -50,7 +50,7 @@ export default function HomeScreen(props: any) {
         <FlatList
           data={categories}
           keyExtractor={(item, index) =>
-            item.id?.toString() ?? index.toString()
+            item._id?.toString() ?? index.toString()
           }
           horizontal
           showsHorizontalScrollIndicator={false}

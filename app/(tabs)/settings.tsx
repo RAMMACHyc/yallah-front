@@ -8,6 +8,7 @@ import { getPosts } from "@/features/post/postThunks";
 import Places from "@/components/Places";
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 
 
 const settings = () => {
@@ -53,14 +54,14 @@ const settings = () => {
             columnWrapperStyle={styles.columnWrapper}    
           />
         </View>
-        <View style={{width:150,height:40,backgroundColor:'blue',borderRadius:20,position:'absolute',top:670,left:120}} >
+        <Animated.View style={{width:150,height:40,backgroundColor:'blue',borderRadius:20,position:'absolute',top:670,left:120}} entering={FadeInUp.delay(200).duration(1000).springify()} >
           <Link href="/addPlace">
           <View style={{flexDirection:'row',gap:20,justifyContent:'center',padding:10}}>
           <Text style={{textAlign:'center',color:'white',fontWeight:'800'}}>Top Places</Text>
           <AntDesign name="doubleright" size={24} color="white" />
           </View>
           </Link>
-        </View>
+        </Animated.View>
     </View>
   );
 };

@@ -15,10 +15,14 @@ import { useAppSelector } from "@/store";
 import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 import { AntDesign } from "@expo/vector-icons";
 import FilterByCategory from "@/components/FilterByCategory";
+import { CategoryType } from "@/types/category";
+import { CityType } from "@/types/city";
 
 const location: React.FC = () => {
   const [coordinates, setCoordinates] = useState<LatLng | null>(null);
+  const [selectedCity, setSelectedCity] = useState<CityType | null>(null);
   const [show, setShow] = React.useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryType | null>(null);
   const [open, setOpen] = useState(false);
   const navigation = useNavigation();
   const handleMapPress = (event: LatLng) => {
@@ -32,6 +36,11 @@ const location: React.FC = () => {
   const posts = useAppSelector((state) => state.post.posts);
   const handleGoBack = () => {
     navigation.goBack();
+  };
+    
+  const handleCategorySelection = (selectedCategory: CategoryType) => {
+  
+    console.log('Selected Category:', selectedCategory);
   };
 
   return (
@@ -140,11 +149,11 @@ const location: React.FC = () => {
             <FlatList
               data={categories}
               keyExtractor={(item, index) =>
-              item.id?.toString() ?? index.toString()
+              item._id?.toString() ?? index.toString()
               }
               horizontal
               showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => <FilterByCategory item={item} />}
+              renderItem={({ item }) => <FilterByCategory item={item} onCategorySelect={handleCategorySelection}   />}
             />
             )}
           </View>
