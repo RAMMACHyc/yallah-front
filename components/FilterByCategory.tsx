@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import {  Text, TouchableOpacity, View } from "react-native";
-import styled from "styled-components/native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { CategoryType } from "@/types/category";
-import AntDesign from "react-native-vector-icons/AntDesign";
 import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
-import { CityType } from "@/types/city";
 import { useAppDispatch } from "@/store";
-import { createPlace } from "@/features/place/placeThunks";
+
 
 type Props = {
   item: CategoryType;
