@@ -15,12 +15,13 @@ import color from "@/styles/color";
 import { getPosts } from "@/features/post/postThunks";
 import { useAppDispatch, useAppSelector } from "@/store";
 import Post from "@/components/Post";
-import { FontAwesome } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import useUserData from "@/hook/useUserData";
+import WhatsAppLink from "@/components/WhatsAppLink";
 
 export default function profile() {
   const posts = useAppSelector((state) => state.post.posts);
-
+  const userData = useUserData();
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getPosts());
@@ -71,7 +72,7 @@ export default function profile() {
       <View style={styles.infoContainer}>
         <AntDesign name="pushpino" size={24} color="black" />
         <Text style={[styles.text, { fontWeight: "200", fontSize: 26 }]}>
-          Sedik Rammach
+          {userData?.user.username}
         </Text>
       </View>
       <View
@@ -93,9 +94,7 @@ export default function profile() {
             alignItems: "center",
           }}
         >
-          <Link href="whatsapp://send?text=👋&phone=0645448595">
-            <FontAwesome name="whatsapp" size={30} color="white" />
-          </Link>
+          <WhatsAppLink />
         </View>
       </View>
 
@@ -150,6 +149,7 @@ export default function profile() {
           <AntDesign style={styles.icon} color="white" name="right" size={18} />
         </View>
       </View>
+      
       <View
         style={{
           flexDirection: "row",
@@ -162,13 +162,10 @@ export default function profile() {
         </Text>
         <AntDesign style={styles.icon} color="#41444B" name="find" size={30} />
       </View>
+      
       <FlatList
         data={posts}
-        keyExtractor={(item, index) => item.id?.toString() ?? index.toString()}
-        numColumns={2}
-        // horizontal
-        // showsHorizontalScrollIndicator={false}
-
+        keyExtractor={(item, index) => item.id?.toString() ?? index.toString()}  
         renderItem={({ item }) => <Post item={item} />}
       />
     </>
