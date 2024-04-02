@@ -4,15 +4,22 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { AntDesign } from '@expo/vector-icons';
 import { useAppSelector, useAppDispatch } from '@/store';
 import { getCities } from '@/features/city/cityThunks';
-import { CityResponse } from '@/types/city';
+import { CityResponse, CityType } from '@/types/city';
+import { MaterialIcons } from '@expo/vector-icons';
 
 interface Item {
   label: string;
   value: string;
 }
 
-const DropdownComponent: React.FC = () => {
+
+interface DropdownProps {
+  onCitySelect: (city: CityType | null) => void;
+}
+
+const DropdownComponent: React.FC<DropdownProps> = ({ onCitySelect }) => {
   const [value, setValue] = useState<string | null>(null);
+  const [selectedCity, setSelectedCity] = useState<CityType | null>(null);
   const cities = useAppSelector((state: { cities: CityResponse }) => state.cities.cities);
   const dispatch = useAppDispatch();
 
@@ -20,11 +27,16 @@ const DropdownComponent: React.FC = () => {
     dispatch(getCities());
   }, []);
 
+
+  useEffect(() => {
+    onCitySelect(selectedCity);
+  }, [selectedCity, onCitySelect]);
+
   const renderItem = (item: { label: string; value: string; }, selected?: boolean | undefined) => (
     <View style={styles.item}>
       <Text style={styles.textItem}>{item.label}</Text>
       {selected && (
-        <AntDesign style={styles.icon} color="black" name="find" size={20} />
+        <MaterialIcons style={styles.icon}  name="share-location" size={20} color="red" />
       )}
     </View>
   );
@@ -49,8 +61,11 @@ const DropdownComponent: React.FC = () => {
   onChange={(item: Item | null) => {
     if (item) {
       setValue(item.value);
+      const selectedCityData = cities?.cities?.find((city) => city.id.toString() === item.value);
+      setSelectedCity(selectedCityData || null);
     } else {
       setValue(null);
+      setSelectedCity(null);
     }
   }}
   renderLeftIcon={() => (
@@ -65,7 +80,7 @@ export default DropdownComponent;
 
 const styles = StyleSheet.create({
   dropdown: {
-    width: 140,
+    width: 145,
     height: 40,
     backgroundColor: 'white',
     borderRadius: 20,
