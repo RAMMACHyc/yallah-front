@@ -4,15 +4,16 @@ import color from "../styles/color";
 import { Feather } from '@expo/vector-icons';
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { AntDesign } from '@expo/vector-icons';
-import { PostType } from "@/types/post";
+import { PostResponce } from "@/types/post";
 import { API_URL } from "@/constants/API_URL";
 
 
 type Props = {
-  item: PostType;
+  item: any;
 };
 
 const ListPlaces = ({ item }: Props) => {
+  
   return (
     <View style={{ flexDirection: "row" }}>
       <View
@@ -78,7 +79,7 @@ const ListPlaces = ({ item }: Props) => {
         <View style={{flexDirection:'column',gap:16,padding:10}}>
           <View style={{flexDirection:'row',justifyContent:'space-between'}}>
             <View>
-              <Text style={{fontSize:20,fontWeight:'bold'}}>The Coffee House</Text>
+              <Text style={{fontSize:20,fontWeight:'bold'}}>{item.title}</Text>
             </View>
            
             <View style={{flexDirection:'row'}}>
@@ -89,7 +90,7 @@ const ListPlaces = ({ item }: Props) => {
           </View>
            <View style={{flexDirection:'row'}}>
            <AntDesign name="enviromento" size={30} color='red'/>
-            <Text style={{fontSize:18,fontWeight:'400',color:'gray'}}>Joshua Tree Park, USA</Text>
+            <Text style={{fontSize:18,fontWeight:'400',color:'gray'}}>{item.city}</Text>
             </View>
           </View>
       </View>
