@@ -12,24 +12,12 @@ import { useOnBoarding } from "../../utils/useOnboarding";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { getCategories } from "@/features/category/categoryThunks";
 import { getPosts } from "@/features/post/postThunks";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 export default function HomeScreen(props: any) {
   const categories = useAppSelector((state) => state.category.categories);
   const posts = useAppSelector((state) => state.post.posts);
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const userData = await AsyncStorage.getItem('user');
-  //       const userId = userData != null ? JSON.parse(userData).id : null;
-  //       console.log('User ID fetched from AsyncStorage:', userId);
-
-  //     } catch (error) {
-  //       console.error('Error fetching data from AsyncStorage:', error);
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, []);
+  
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -77,7 +65,7 @@ export default function HomeScreen(props: any) {
           <Text style={{ fontSize: 20, fontWeight: "bold", padding: 7 }}>
             Popular Places
           </Text>
-          {/* <DropdownComponent /> */} 
+          <AntDesign style={styles.icon} color="#41444B" name="find" size={30} /> 
         </View>
         <FlatList
           data={posts}
@@ -101,5 +89,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: "center",
     backgroundColor: "white",
+  },
+  icon: {
+    margin: 5,
   },
 });
