@@ -28,6 +28,5 @@ npm run start:dev
 ```
 
 
+![7f6f6653177](https://github.com/RAMMACHyc/yallah-front/assets/112940066/8e6a1d77-22a6-4c6f-ad22-42070fb8d02d)
 
-
-N'hésitez pas à ajuster le style et le contenu selon vos besoins spécifiques !
